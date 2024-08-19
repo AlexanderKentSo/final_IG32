@@ -35,6 +35,10 @@ Route::group(
     function () {
         Route::get('/', [MiniGame\MiniGameController::class, 'index'])
             ->name('index');
+        Route::post('/get-active-cell', [MiniGame\MiniGameController::class, 'getActiveCell'])
+            ->name('cell.active');
+        Route::post('/submit', [MiniGame\MiniGameController::class, 'submit'])
+            ->name('submit');
     }
 );
 

@@ -18,7 +18,7 @@ const customPalette = {
     // "info": '#075985',
     info: "#598BAE",  // k
     "info-content": "#363D28",
-    "warning": "#D9CE40"
+    "warning": "#FFA31F"  // k
 };
 
 /** @type {import('tailwindcss').Config} */

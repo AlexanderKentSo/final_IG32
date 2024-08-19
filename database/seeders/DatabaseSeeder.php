@@ -28,8 +28,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             BoardSeeder::class,
             TeamSeeder::class,
-//            QuestionSeeder::class,
-//            LetterSeeder::class,
+            QuestionSeeder::class,
+            LetterSeeder::class,
 //            DirectionSeeder::class,
         ]);
     }
