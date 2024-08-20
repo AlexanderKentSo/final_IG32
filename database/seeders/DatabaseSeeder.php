@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
             TeamSeeder::class,
             QuestionSeeder::class,
             LetterSeeder::class,
-//            DirectionSeeder::class,
+            CardSeeder::class,
         ]);
     }
 }
