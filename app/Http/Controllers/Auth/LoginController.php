@@ -49,7 +49,7 @@ class LoginController extends Controller
                 case 'minigame':
                     return redirect()->intended('/minigame');
                 case "peserta":
-                    abort(403);// Sementara, nanti hapus aja
+                    return redirect()->intended('/peserta');
                 default:
                     abort(404);
             }

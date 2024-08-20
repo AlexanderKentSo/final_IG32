@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\MiniGame;
+use App\Http\Controllers\Peserta;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,15 @@ Route::group(
             ->name('cell.active');
         Route::post('/submit', [MiniGame\MiniGameController::class, 'submit'])
             ->name('submit');
+    }
+);
+
+// Peserta
+Route::group(
+    ['middleware' => 'peserta', 'prefix' => 'peserta', 'as' => 'peserta.'],
+    function () {
+        Route::get('/', [Peserta\PesertaController::class, 'index'])
+            ->name('index');
     }
 );
 

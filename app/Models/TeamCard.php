@@ -10,6 +10,8 @@ class TeamCard extends Model
 {
     use HasFactory;
 
+    protected $table = 'team_cards';
+
     protected $fillable = [
         'card_id',
         'team_id'
