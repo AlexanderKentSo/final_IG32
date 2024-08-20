@@ -9,6 +9,13 @@ class PesertaController extends Controller
 {
     public function index()
     {
-        return view('peserta.index');
+//        $hargaJual =
+        $tim = auth()->user()->team;
+        $kartu = $tim->cards()->orderBy('created_at', "DESC")->first();
+//        dd($kartu->card);
+        return view('peserta.index', compact(
+            'kartu',
+            'tim'
+        ));
     }
 }
