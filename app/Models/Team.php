@@ -23,4 +23,8 @@ class Team extends Model
     public function histories() : HasMany {
         return $this->hasMany(History::class, 'team_id');
     }
+
+    public function cards() : HasMany {
+        return $this->hasMany(TeamCard::class, 'team_id');
+    }
 }

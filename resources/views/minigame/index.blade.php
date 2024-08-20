@@ -501,13 +501,18 @@
 
                 if (response.status === 'success') {
                     inputs.attr('show', "1");
+                    Swal.fire({
+                        title: 'Success!',
+                        text: response.msg,
+                        icon: 'success',
+                    })
                     reset();
                 } else if (response.status === 'failed') {
                     Swal.fire({
                         title: 'Error!',
                         text: response.msg,
                         icon: 'error',
-                    })
+                    });
                 }
             },
             error: function (xhr) {
@@ -563,7 +568,7 @@
 
                             $(this).addClass('current-state');
                         }
-                    })
+                    });
 
                 console.log(response);
             },
@@ -620,7 +625,7 @@
 
                             $(this).addClass('current-state');
                         }
-                    })
+                    });
 
                 console.log(response);
             },
