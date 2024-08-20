@@ -191,6 +191,7 @@
 
         .square:disabled {
             border: 1px solid rgba(0, 0, 0, 0.2);
+            pointer-events:none;
         }
 
         .square:enabled {
@@ -201,8 +202,10 @@
 
         .square:focus {
             outline: none;
-            border: 1.5px solid #2F3645;
-            filter: drop-shadow(0px 4px #2F3645);
+            /*border: 1.5px solid #2F3645;*/
+            border: 1.5px solid #6B0001;
+            /*filter: drop-shadow(0px 4px #2F3645);*/
+            filter: drop-shadow(0px 4px #6B0001);
             transform: translateY(-4px);
         }
 
@@ -264,7 +267,7 @@
         <div class="w-full max-w-xs">
             <label for="nomor-1-team" class="font-semibold">Select Team</label>
             <br />
-            <select name="nomor-1-team" id="nomor-1-team" class="" style="width: 100%;">
+            <select name="nomor-team" id="nomor-team" class="" style="width: 100%;">
                 <option value="" disabled selected>--- Select Team ---</option>
                 @foreach($teams as $team)
                     <option value="{{ $team->id }}">{{ $team->name }}</option>
@@ -290,16 +293,9 @@
                             <select name="nomor-1-question" id="nomor-1-question" class="w-24" style="width: 100%;">
                                 <option value="" selected disabled>-- Select Question --</option>
                                 @foreach($questionBoard1 as $q)
-    {{--                                <option value="{{ $q->id }}">{{ $q->number }}</option>--}}
                                     <option value="{{ $q->id }}">{{ $q->number }}</option>
                                 @endforeach
                             </select>
-{{--                            <button--}}
-{{--                                id="btnChooseQuestion1"--}}
-{{--                                class="btn btn-accent btn-sm self-end rounded"--}}
-{{--                            >--}}
-{{--                                Choose--}}
-{{--                            </button>--}}
                         </div>
 
                         <button
@@ -312,7 +308,7 @@
                     </div>
                 </div>
                 <br />
-                <div class="flex justify-center pl-14">
+                <div class="flex justify-center pl-14 select-none">
                     <table>
                         @for($row = 1; $row <= $board1MaxRow; $row++)
                             <tr>
@@ -339,7 +335,6 @@
                                     @else
                                         <td></td>
                                     @endif
-{{--                                    <td class="bg-white">{{ $row }} - {{ $col }}</td>--}}
                                 @endfor
                             </tr>
                         @endfor
@@ -349,15 +344,60 @@
 
             {{--      Board 2      --}}
             <div class="board board-2 bg-base-300 p-4 shadow-xl" style="display: none;">
-                <div class="w-1/6">
+                <div class="w-full">
                     <label for="nomor-2-question" class="font-semibold">Select Question</label>
                     <br />
-                    <select name="nomor-2-question" id="nomor-2-question" class="w-full" style="width: 100%;">
-                        <option value="" selected disabled>-- Select Question --</option>
-                        @foreach($questionBoard2 as $q)
-                            <option value="{{ $q->id }}">{{ $q->number }}</option>
-                        @endforeach
-                    </select>
+                    <div class="flex justify-between">
+                        <div class="flex gap-x-4 items-center w-1/6">
+                            <select name="nomor-2-question" id="nomor-2-question" class="w-24" style="width: 100%;">
+                                <option value="" selected disabled>-- Select Question --</option>
+                                @foreach($questionBoard2 as $q)
+                                    <option value="{{ $q->id }}">{{ $q->number }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <button
+                            class="btn btn-primary self-end rounded"
+                            id="btnAnswer2"
+                            onclick="answer(2)"
+                        >
+                            Answer
+                        </button>
+                    </div>
+                </div>
+                <br />
+                <div class="flex justify-center pl-14 select-none">
+                    <table>
+                        @for($row = 1; $row <= $board2MaxRow; $row++)
+                            <tr>
+                                @for($col = 1; $col <= $board2MaxCol; $col++)
+                                    @if(isset($letter2[$row][$col]))
+                                        <td>
+                                            <input
+                                                type="text"
+                                                class="square text-black"
+                                                value="{{ ($letter2[$row][$col]['show']) ? strtoupper($letter2[$row][$col]['letter']) : "" }}"
+                                                oninput="this.value = this.value.toUpperCase()"
+                                                maxlength="1"
+                                                row="{{ $row }}"
+                                                col="{{ $col }}"
+                                                board="2"
+                                                show="{{ $letter2[$row][$col]['show'] }}"
+                                                direction="{{ $letter2[$row][$col]['direction'] }}"
+                                                disabled
+                                            />
+                                            @if(isset($letter2[$row][$col]['head_number']))
+                                                <span class="number-title">{{ $letter2[$row][$col]['head_number'] }}</span>
+                                            @endif
+                                        </td>
+                                    @else
+                                        <td></td>
+                                    @endif
+                                @endfor
+                            </tr>
+                        @endfor
+                    </table>
                 </div>
             </div>
         </div>
@@ -369,8 +409,7 @@
 
 
     $(document).ready(function () {
-        $("#nomor-1-team").select2();
-        $("#nomor-2-team").select2();
+        $("#nomor-team").select2();
         $("#nomor-1-question").select2();
         $("#nomor-2-question").select2();
     });
@@ -395,9 +434,11 @@
     }
 
     const answer = (board) => {
+        // console.log($("#nomor-"+ board +"-question").val());
+        // return;
         if (
-            $("#nomor-1-question").val() == null ||
-            $("#nomor-1-team").val() == null
+            $("#nomor-"+ board +"-question").val() == null ||
+            $("#nomor-team").val() == null
         ) {
             Swal.fire({
                 title: 'Error!',
@@ -431,8 +472,8 @@
         });
 
         let answer = sortedInputs.map(input => $(input).val()).join('');
-        let team_id = $("#nomor-1-team").val();
-        let question_id = $("#nomor-1-question").val();
+        let team_id = $("#nomor-team").val();
+        let question_id = $("#nomor-"+ board +"-question").val();
 
         $.ajax({
             type: 'POST',
@@ -447,18 +488,27 @@
             success: function (response) {
                 console.log(response)
                 let board = parseInt(response.board);
-                if (board === 1) {
-                    // $("#nomor-1-question").html("");
-                    let options = "<option value='' selected disabled>-- Select Question --</option>";
+                // if (board === 1) {
+                //     // $("#nomor-1-question").html("");
+                //
+                // }
+                let options = "<option value='' selected disabled>-- Select Question --</option>";
 
-                    for (const [key, val] of Object.entries(response.questions)) {
-                        options += `<option value="${val.id}">${val.number}</option>`
-                    }
-
-                    $("#nomor-1-question").html(options);
+                for (const [key, val] of Object.entries(response.questions)) {
+                    options += `<option value="${val.id}">${val.number}</option>`;
                 }
-                inputs.attr('show', "1");
-                reset();
+                $("#nomor-"+ board +"-question").html(options);
+
+                if (response.status === 'success') {
+                    inputs.attr('show', "1");
+                    reset();
+                } else if (response.status === 'failed') {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: response.msg,
+                        icon: 'error',
+                    })
+                }
             },
             error: function (xhr) {
                 console.log(xhr);
@@ -467,14 +517,6 @@
     }
 
     $("#nomor-1-question").on("change", function () {
-        // let direction = $("#nomor-1-question").val();
-        // reset();
-        // $("[direction*=:direction]".replace(":direction", direction)).each(function (id) {
-        //     if ($(this).attr("show", "0")) {
-        //         $(this).attr("disabled", false);
-        //         $(this).blur();
-        //     }
-        // })
         let question_id = $(this).val();
 
         if (!question_id) {
@@ -511,7 +553,65 @@
 
                         if (
                             rows.includes(row) &&
-                            cols.includes(col)
+                            cols.includes(col) &&
+                            $(this).attr('board') === "1"
+                        ) {
+                            if ($(this).attr("show") === "0") {
+                                $(this).attr("disabled", false);
+                                $(this).blur();
+                            }
+
+                            $(this).addClass('current-state');
+                        }
+                    })
+
+                console.log(response);
+            },
+            error: function (xhr) {
+                console.log(xhr);
+            }
+        })
+    })
+
+    $("#nomor-2-question").on("change", function () {
+        let question_id = $(this).val();
+
+        if (!question_id) {
+            Swal.fire({
+                title: 'Error!',
+                text: 'Silahkan pilih pertanyaan terlebih dahulu!',
+                icon: 'error',
+            })
+            notyf
+                .success({
+                    message: 'There has been an error. Dismiss to retry.',
+                    dismissible: true,
+                    duration: 2000,
+                    icon: false
+                })
+            return;
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('minigame.cell.active') }}',
+            data: {
+                '_token': '{{ csrf_token() }}',
+                'question_id': question_id
+            },
+            success: function (response) {
+                reset();
+                let rows = response.rows;
+                let cols = response.cols;
+                $("[direction*=:direction]".replace(":direction", response.number))
+                    .each(function (id) {
+                        let row = parseInt($(this).attr("row"));
+                        let col = parseInt($(this).attr("col"));
+
+                        if (
+                            rows.includes(row) &&
+                            cols.includes(col) &&
+                            $(this).attr('board') === "2"
                         ) {
                             if ($(this).attr("show") === "0") {
                                 $(this).attr("disabled", false);

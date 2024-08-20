@@ -15,8 +15,10 @@ class QuestionSeeder extends Seeder
     public function run(): void
     {
         // Board 1
-        $board = Board::all()->first();
-        $questions = [
+//        $board = Board::all()->first();
+        $board1 = Board::where('board', 1)->first();
+        $board2 = Board::where('board', 2)->first();
+        $questions1 = [
             1 => [
                 'question' => "Reaksi yang melepas elektron disebut reaksi?",
                 "answer" => "oksidasi"
@@ -79,9 +81,86 @@ class QuestionSeeder extends Seeder
             ]
         ];
 
+        $questions2 = [
+            1 => [
+                'question' => 'Bunyi pantul yang terdengar sebelum bunyi asli selesai',
+                'answer' => 'gaung'
+            ],
+            2 => [
+                'question' => 'Sel ... merupakan sel yang memiliki nukleus sejati dan memiliki membran pemisa',
+                'answer' => 'eukariotik'
+            ],
+            3 => [
+                'question' => 'Mata uang negara Myanmar adalah ...',
+                'answer' => 'kyat'
+            ],
+            4 => [
+                'question' => 'Proses termodinamika yang terjadi pada suhu konstan',
+                'answer' => 'isotermal'
+            ],
+            5 => [
+                'question' => 'Reaksi yang menangkap elektron disebut reaksi ...',
+                'answer' => 'reduksi'
+            ],
+            6 => [
+                'question' => 'Negara yang memenangkan piala dunia FIFA 2014',
+                'answer' => 'jerman'
+            ],
+            7 => [
+                'question' => '𝜀 dibaca ... ',
+                'answer' => 'epsilon'
+            ],
+            8 => [
+                'question' => 'Jenis plastik ... sering digunakan dalam pembuatan tempat penyimpanan makanan dan botol bayi karena tidak mudah bereaksi dengan bahan makanan dan minuman.',
+                'answer' => 'polipropilen'
+            ],
+            9 => [
+                'question' => 'Daerah hasil dalam matematika disebut',
+                'answer' => 'range'
+            ],
+            10 => [
+                'question' => 'Lensa yang bersifat konvergen adalah lensa ...',
+                'answer' => 'cembung'
+            ],
+            11 => [
+                'question' => 'Aturan Chargaff, dalam DNA jumlah adenin = jumlah ...',
+                'answer' => 'timin'
+            ],
+            12 => [
+                'question' => 'Pori-pori kecil yang terletak pada permukaan daun dan batang tanaman dan berfungsi sebagai tempat pertukaran gas disebut ...',
+                'answer' => 'stomata'
+            ],
+            13 => [
+                'question' => 'Unsur kimia dengan nomor atom 8',
+                'answer' => 'oksigen'
+            ],
+            14 => [
+                'question' => 'Lagu nasional Bendera Merah Putih diciptakan oleh ...',
+                'answer' => 'soed'
+            ],
+            15 => [
+                'question' => 'Pad Thai merupakan makanan khas negara ...',
+                'answer' => 'thailand'
+            ]
+        ];
+
+//        foreach ($questions as $num => $question) {
+//            Question::create([
+//                'board_id' => $board->id,
+//                'number' => $num,
+//                'question' => $question['question'],
+//                'answer' => $question['answer']
+//            ]);
+//        }
+        $this->create($board1->id, $questions1);
+        $this->create($board2->id, $questions2);
+    }
+
+    public function create($board_id, $questions)
+    {
         foreach ($questions as $num => $question) {
             Question::create([
-                'board_id' => $board->id,
+                'board_id' => $board_id,
                 'number' => $num,
                 'question' => $question['question'],
                 'answer' => $question['answer']

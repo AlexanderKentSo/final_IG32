@@ -27,7 +27,6 @@ class MiniGameController extends Controller
         $questionBoard1 = Question::where('board_id', 1)
                                 ->whereNotIn('id', $histories)
                                 ->get();
-//        dd($questionBoard1);
 
 //        $letter1Temp = Board::with('letters')
 //                    ->join('letters', 'boards.id', '=', 'letters.board_id')
@@ -48,39 +47,25 @@ class MiniGameController extends Controller
                         ->selectRaw("max(letters.row) as row, max(letters.col) as col")
                         ->get()
                         ->toArray()[0];
+
         $board1MaxRow = $letter1rowcol['row'];
         $board1MaxCol = $letter1rowcol['col'];
-//        dd($board1MaxCol);
 
         $letter1 = [];
-        $i = 1;
-//        dd($letter1Temp);
+
         foreach ($letter1Temp as $l) {
             $numAndDir = [];
-//            dd($l->id);
             $currLetter = Letter::with('questions')
                             ->join('directions', 'letters.id', '=', 'directions.letter_id')
                             ->join('questions', 'directions.question_id', '=', 'questions.id')
                             ->where('letters.id', $l->id)->get();
-//            dd($currLetter);
-//            if ($i == 23) {
-//                dd($l->id);
-//            }
-//
-//            $i++;
-//            $directions = $currLetter->questions()->get();
-//            dd($directions);
-//            dd($directions);
+
             foreach ($currLetter as $curr) {
-//                $numAndDir[] = (string)$curr->number . "-" . $curr->direction;
                 $numAndDir[] = (string)$curr->number;
-//                dd($curr);
             }
 
             $numAndDir = implode("|", $numAndDir);
-//            dd($numAndDir);
-//
-//            dd($numAndDir);
+
             $letter1[$l->row][$l->col] = [
                 'show' => $l->show,
                 'letter' => $l->letter,
@@ -89,20 +74,63 @@ class MiniGameController extends Controller
             ];
         }
 
-//        dd($letter1);
 
-        $questionBoard2 = Board::with('questions')
-                            ->join('questions', 'boards.id', '=', 'questions.board_id')
-                            ->where('boards.board', '=', 2)
+//        $questionBoard2 = Board::with('questions')
+//                            ->join('questions', 'boards.id', '=', 'questions.board_id')
+//                            ->where('boards.board', '=', 2)
+//                            ->get();
+
+        $questionBoard2 = Question::where('board_id', 2)
+                                ->whereNotIn('id', $histories)
+                                ->get();
+
+        $letter2Temp = Letter::where('board_id', 2)
+                            ->orderBy('row', 'ASC')
+                            ->orderBy('col', 'ASC')
                             ->get();
-//        dd($letter1);
+
+        $letter2rowcol = Board::join('letters', 'boards.id', '=', 'letters.board_id')
+                            ->where('boards.board', '=', 2)
+                            ->selectRaw("max(letters.row) as row, max(letters.col) as col")
+                            ->get()
+                            ->toArray()[0];
+
+        $board2MaxRow = $letter2rowcol['row'];
+        $board2MaxCol = $letter2rowcol['col'];
+
+        $letter2 = [];
+
+        foreach ($letter2Temp as $l) {
+            $numAndDir = [];
+            $currLetter = Letter::with('questions')
+                            ->join('directions', 'letters.id', '=', 'directions.letter_id')
+                            ->join('questions', 'directions.question_id', '=', 'questions.id')
+                            ->where('letters.id', $l->id)->get();
+
+            foreach ($currLetter as $curr) {
+                $numAndDir[] = (string)$curr->number;
+            }
+
+            $numAndDir = implode("|", $numAndDir);
+
+            $letter2[$l->row][$l->col] = [
+                'show' => $l->show,
+                'letter' => $l->letter,
+                'head_number' => $l->head_number,
+                'direction' => $numAndDir
+            ];
+        }
+
         return view('minigame.index', compact(
                 'teams',
                 'questionBoard1',
                 'questionBoard2',
                 'letter1',
+                'letter2',
                 'board1MaxRow',
-                'board1MaxCol'
+                'board1MaxCol',
+                'board2MaxRow',
+                'board2MaxCol'
             )
         );
     }
@@ -135,7 +163,7 @@ class MiniGameController extends Controller
             if (!$question->history()->get()->isEmpty()) {
                 return response()->json([
                     'status' => "failed",
-                    'msg' => 'Pertanyaan sudah terjawab!'
+                    'msg' => 'Soal sudah terjawab!'
                 ], 200);
             }
 
