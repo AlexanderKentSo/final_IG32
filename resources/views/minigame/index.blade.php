@@ -13,6 +13,8 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pace-js@latest/pace.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@latest/pace-theme-default.min.css">
 
     @vite('resources/css/app.css')
     <style>
@@ -25,6 +27,11 @@
             --number-title-font-size: 0.6rem;
             --number-title-left: 0.3rem;
             --number-title-top: 0.25rem;
+        }
+
+        .pace .pace-progress {
+            background-color: oklch(var(--p)) !important;
+            height: 0.25rem !important;
         }
 
         *::-webkit-scrollbar {

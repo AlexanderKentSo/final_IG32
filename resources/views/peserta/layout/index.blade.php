@@ -14,6 +14,9 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pace-js@latest/pace.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@latest/pace-theme-default.min.css">
+
     @yield('cdn')
     @vite('resources/css/app.css')
     <style>
@@ -34,6 +37,11 @@
             /*background-color: #1e293b;*/
             outline: 1px solid slategrey;
             border-radius: 0.8rem;
+        }
+
+        .pace .pace-progress {
+            background-color: oklch(var(--p)) !important;
+            height: 0.25rem !important;
         }
     </style>
     @yield('styles')
@@ -135,7 +143,7 @@
 {{--</footer>--}}
 
 <script>
-    document.getElementById("modalCard").showModal();
+    // document.getElementById("modalCard").showModal();
 </script>
 @yield('scripts')
 </body>
