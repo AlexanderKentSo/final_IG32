@@ -23,6 +23,8 @@ class RedirectIfAuthenticated
             if (Auth::guard($guard)->check()) {
                 if (Auth::user()->role == 'minigame') {
                     return redirect()->intended('/minigame');
+                } else if (Auth::user()->role == 'peserta') {
+                    return redirect()->intended('/peserta');
                 }
                 return redirect(RouteServiceProvider::HOME);
             }
