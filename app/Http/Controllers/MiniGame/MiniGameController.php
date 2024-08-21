@@ -4,10 +4,12 @@ namespace App\Http\Controllers\MiniGame;
 
 use App\Http\Controllers\Controller;
 use App\Models\Board;
+use App\Models\Card;
 use App\Models\History;
 use App\Models\Letter;
 use App\Models\Question;
 use App\Models\Team;
+use App\Models\TeamCard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -152,12 +154,27 @@ class MiniGameController extends Controller
         ), 200);
     }
 
+    public function leftOver(Request $request)
+    {
+        $team = Team::find($request->get('team_id'));
+        $leftover = 3 - $team->cards()->count();
+
+        return response()->json(compact('leftover'), 200);
+    }
+
     public function submit(Request $request) {
         DB::beginTransaction();
         try {
             $board = Board::where('board', $request->get('board'))->first();
             $team = Team::find($request->get('team_id'));
             $question = Question::find($request->get('question_id'));
+
+            if ($team->cards()->count() >= 3) {
+                return response()->json([
+                    'status' => "failed",
+                    'msg' => 'Tim hanya dapat menjawab soal dengan benar sebanyak maksimal 3 kali!'
+                ], 200);
+            }
 
             // Kalo udh terjawab
             if (!$question->history()->get()->isEmpty()) {
@@ -199,13 +216,31 @@ class MiniGameController extends Controller
                     'show' => '1'
                 ]);
 
+            // Ambil semua kartu yg udh diambil sama seluruh tim
+            $unavailableCards = TeamCard::all()->pluck('card_id')
+                                    ->toArray();
+
+            // Check semua kartu yg masih bisa diambil
+            $availableCards = Card::whereNotIn('id', $unavailableCards)->get();
+
+            // Acak Kartunya (RANDOM)
+            $availableCards = $availableCards->shuffle();
+            $pickedCard = $availableCards[0];
+
+            // Simpan kartu
+            $teamCard = TeamCard::create([
+                'card_id' => $pickedCard->id,
+                'team_id' => $team->id
+            ]);
+
             DB::commit();
 
             return response()->json([
                 'status' => "success",
                 'msg' => 'Jawaban Anda benar!',
                 'questions' => $questionBoard,
-                'board' => $board->board
+                'board' => $board->board,
+                'card' => $pickedCard
             ], 200);
         } catch (\Exception $x) {
             DB::rollBack();

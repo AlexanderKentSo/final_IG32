@@ -280,6 +280,8 @@
                     <option value="{{ $team->id }}">{{ $team->name }}</option>
                 @endforeach
             </select>
+            <br />
+            <p class="mt-2 text-body font-bold">Leftover: <span id="leftOver">-</span></p>
         </div>
 
         {{--    Board Choices    --}}
@@ -410,9 +412,32 @@
         </div>
     </div>
 </div>
+
+{{--  Modal kartu  --}}
+<dialog id="modalCard" class="modal">
+    <div class="modal-box w-11/12 max-w-xl rounded-md bg-base-100 select-none">
+        <h3 class="text-3xl text-primary select-none text-center text-body">Selamat Anda mendapatkan kartu</h3>
+        <h4 class="text-2xl text-primary select-none text-center text-header mt-5" id="cardTitle"></h4>
+        <div class="flex justify-center mt-3">
+            <div
+                class="bg-secondary/50 border border-base-300 w-1/2 h-96 rounded flex flex-col items-center justify-center shadow-2xl"
+                style="border-width: 5px;"
+            >
+                <img src="{{ asset('images/maskot.svg') }}" alt="" class="w-1/2" draggable="false" id="cardImg">
+                <p class="p-2 font-bold text-center text-accent" id="cardDesc">asdsadadsd</p>
+            </div>
+        </div>
+    </div>
+    <form method="dialog" class="modal-backdrop">
+        <button>close</button>
+    </form>
+</dialog>
+
 <script>
     // ===== SWAL Toaster =====
     var notyf = new Notyf();
+
+    // $("#modalCard")[0].showModal();
 
 
     $(document).ready(function () {
@@ -427,6 +452,28 @@
         $(".board").css('display', 'none');
         $("." + $(this).attr('id')).css('display', 'block');
     });
+
+    $("#nomor-team").on('change', function () {
+        let team_id = $(this).val();
+
+        if (team_id) {
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('minigame.leftover') }}',
+                data: {
+                    '_token': '{{ csrf_token() }}',
+                    'team_id': team_id
+                },
+                success: function (response) {
+                    reset();
+                    $("#leftOver").text(response.leftover);
+                },
+                error: function (xhr) {
+                    console.log(xhr);
+                }
+            })
+        }
+    })
 
     const reset = () => {
         $(".square").each(function (id) {
@@ -494,26 +541,29 @@
             },
             success: function (response) {
                 console.log(response)
-                let board = parseInt(response.board);
-                // if (board === 1) {
-                //     // $("#nomor-1-question").html("");
-                //
-                // }
-                let options = "<option value='' selected disabled>-- Select Question --</option>";
-
-                for (const [key, val] of Object.entries(response.questions)) {
-                    options += `<option value="${val.id}">${val.number}</option>`;
-                }
-                $("#nomor-"+ board +"-question").html(options);
 
                 if (response.status === 'success') {
+                    let board = parseInt(response.board);
+                    let options = "<option value='' selected disabled>-- Select Question --</option>";
+
+                    for (const [key, val] of Object.entries(response.questions)) {
+                        options += `<option value="${val.id}">${val.number}</option>`;
+                    }
+                    $("#nomor-"+ board +"-question").html(options);
                     inputs.attr('show', "1");
-                    Swal.fire({
-                        title: 'Success!',
-                        text: response.msg,
-                        icon: 'success',
-                    })
                     reset();
+
+                    // Tampilkan Kartu
+                    $("#cardImg").attr('src', "#");
+                    $("#cardTitle").text(response.card.title);
+                    $("#cardDesc").text(response.card.desc);
+                    let imgAsset = (response.card.type === "chance") ? "{{ asset('images/maskot.svg') }}" : "{{ asset('images/maskot-marah.svg') }}";
+                    $("#cardImg").attr('src', imgAsset);
+
+                    $("#cardImg").on('load', function () {
+                        $("#modalCard")[0].showModal();
+                    });
+
                 } else if (response.status === 'failed') {
                     Swal.fire({
                         title: 'Error!',

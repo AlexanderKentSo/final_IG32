@@ -38,6 +38,8 @@ Route::group(
             ->name('index');
         Route::post('/get-active-cell', [MiniGame\MiniGameController::class, 'getActiveCell'])
             ->name('cell.active');
+        Route::post('/leftover', [MiniGame\MiniGameController::class, 'leftOver'])
+            ->name('leftover');
         Route::post('/submit', [MiniGame\MiniGameController::class, 'submit'])
             ->name('submit');
     }
