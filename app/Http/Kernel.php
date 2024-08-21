@@ -5,6 +5,7 @@ namespace App\Http;
 use App\Http\Middleware\MiniGameMiddleware;
 use App\Http\Middleware\PenposMiddleware;
 use App\Http\Middleware\PesertaMiddleware;
+use App\Http\Middleware\SoalMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -69,5 +70,6 @@ class Kernel extends HttpKernel
         'peserta' => PesertaMiddleware::class,
         'penpos' => PenposMiddleware::class,
         'minigame' => MiniGameMiddleware::class,
+        'soal' => SoalMiddleware::class,
     ];
 }
