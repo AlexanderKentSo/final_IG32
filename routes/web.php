@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\MiniGame;
 use App\Http\Controllers\Peserta;
+use App\Http\Controllers\Soal;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +51,15 @@ Route::group(
     ['middleware' => 'peserta', 'prefix' => 'peserta', 'as' => 'peserta.'],
     function () {
         Route::get('/', [Peserta\PesertaController::class, 'index'])
+            ->name('index');
+    }
+);
+
+// Soal
+Route::group(
+    ['middleware' => 'soal', 'prefix' => 'soal', 'as' => 'soal.'],
+    function () {
+        Route::get('/', [Soal\SoalController::class, 'index'])
             ->name('index');
     }
 );

@@ -50,6 +50,8 @@ class LoginController extends Controller
                     return redirect()->intended('/minigame');
                 case "peserta":
                     return redirect()->intended('/peserta');
+                case "soal":
+                    return redirect()->intended('/soal');
                 default:
                     abort(404);
             }
