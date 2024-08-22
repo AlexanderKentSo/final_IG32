@@ -17,7 +17,10 @@ class SoalController extends Controller
 
     public function create()
     {
-        return view('soal.create');
+        $biggestNumber = McQuestion::orderBy("number", "DESC")
+                                ->first();
+        $next = ($biggestNumber != null) ? $biggestNumber->number + 1 : 1;
+        return view('soal.create', compact('next'));
     }
 
     public function store(Request $request)

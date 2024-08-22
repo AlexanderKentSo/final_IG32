@@ -170,7 +170,7 @@
             </div>
         </div>
         <div class="mt-5 flex justify-end">
-            <button class="btn btn-primary rounded-md px-12">Buat</button>
+            <button class="btn btn-primary rounded-md px-12">Ubah</button>
         </div>
     </form>
 @endsection

@@ -52,6 +52,9 @@ Route::group(
     function () {
         Route::get('/', [Peserta\PesertaController::class, 'index'])
             ->name('index');
+
+        Route::get('/multiple-choice', [Peserta\McController::class, 'index'])
+            ->name('mc.index');
     }
 );
 

@@ -44,7 +44,8 @@
                 <thead>
                     <tr>
                         <th width="10%" class="text-center bg-secondary text-accent font-semibold">Number</th>
-                        <th width="60%" class="text-center bg-secondary text-accent font-semibold">Question</th>
+                        <th width="50%" class="text-center bg-secondary text-accent font-semibold">Question</th>
+                        <th width="10%" class="text-center bg-secondary text-accent font-semibold">Answer</th>
                         <th width="30%" class="text-center bg-secondary text-accent font-semibold">Action</th>
                     </tr>
                 </thead>
@@ -59,14 +60,17 @@
                                 <td width="10%" class="text-center text-accent">
                                     {{ $question->number }}
                                 </td>
-                                <td width="60%" class="text-center text-accent">
+                                <td width="50%" class="text-center text-accent">
                                     {!! $question->question !!}
                                 </td>
+                                <td width="10%" class="text-center text-accent font-bold" style="font-size: 1.2rem;">
+                                    {{ $question->answer }}
+                                </td>
                                 <td width="30%" class="text-center text-accent flex justify-center w-full gap-x-4">
-                                    <a href="{{ route('soal.edit', ['question' => $question->id]) }}" class="btn btn-sm">Update</a>
+                                    <a href="{{ route('soal.edit', ['question' => $question->id]) }}" class="btn btn-warning btn-sm">Update</a>
                                     <form id="formDelete_{{ $question->id }}" action="{{ route('soal.destroy', ['question' => $question->id]) }}" method="POST">
                                         @csrf
-                                        <button class="btn btn-sm" onclick="if (!confirm('Apakah Anda yakin?')) {event.stopPropagation();event.preventDefault()} else { document.getElementById('formDelete_{{ $question->id }}').submit()};">Delete</button>
+                                        <button class="btn bg-red-800 btn-sm" onclick="if (!confirm('Apakah Anda yakin?')) {event.stopPropagation();event.preventDefault()} else { document.getElementById('formDelete_{{ $question->id }}').submit()};">Delete</button>
                                     </form>
                                 </td>
                             </tr>

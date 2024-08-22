@@ -19,7 +19,7 @@ return new class extends Migration
                 ->on('teams')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->double('total_score');
+            $table->double('total_score')->default(0.0);
             $table->timestamp('waktu_selesai')->nullable();
             $table->timestamps();
         });

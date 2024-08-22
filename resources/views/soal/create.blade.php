@@ -78,7 +78,7 @@
                     data-input-counter-min="1"
                     class="bg-base-200 border-x-0 border-gray-300 h-11 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5"
                     min="1"
-                    value="1"
+                    value="{{ $next }}"
                     name="nomor"
                     required />
                 <button type="button" id="increment-button" data-input-counter-increment="quantity-input" class="bg-base-300 hover:bg-base-300/90 border border-gray-300 rounded-e-lg p-3 h-11 active:scale-95 transition-all">
