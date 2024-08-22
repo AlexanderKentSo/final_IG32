@@ -30,7 +30,7 @@
         </div>
     @endif
     {{--  Hero  --}}
-    <div class="flex flex-col items-center gap-y-5 w-full">
+    <div class="flex flex-col items-center gap-y-5 w-full select-none">
         <div class="hero bg-base-200/50 max-w-7xl shadow-xl">
             <div class="hero-content text-center">
                 <div class="max-w-md">
@@ -53,12 +53,12 @@
             </div>
         </div>
 
-        <div class="flex gap-x-5 w-full">
+        <div class="flex gap-x-5 w-full select-none">
             <div class="w-full bg-neutral-content/80 p-4 rounded shadow-xl">
                 <h2 class="text-neutral text-header text-2xl tracking-widest mb-2">Multiple Choice</h2>
                 <p>Disini Anda dapat mengerjakan soal berbentuk <strong>PILIHAN GANDA</strong>.</p>
                 <div class="mt-3 flex justify-end">
-                    <a href="{{ route('peserta.mc.index') }}" class="btn btn-sm px-4 rounded-md">Buka</a>
+                    <a href="{{ route('peserta.mc.index', ['number' => 1]) }}" class="btn btn-sm px-4 rounded-md">Buka</a>
                 </div>
             </div>
             <div class="w-full bg-base-300/80 p-4 rounded shadow-xl">
