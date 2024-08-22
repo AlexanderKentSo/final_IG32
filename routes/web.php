@@ -69,6 +69,8 @@ Route::group(
             ->name('edit');
         Route::post('/{question}/update', [Soal\SoalController::class, 'update'])
             ->name('update');
+        Route::post('/{question}/destroy', [Soal\SoalController::class, 'destroy'])
+            ->name('destroy');
     }
 );
 

@@ -6,6 +6,23 @@
 @php($user = auth()->user())
 
 @section('content')
+    @if(session()->has('success'))
+        <div role="alert" class="alert mb-5 rounded bg-emerald-400">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6 shrink-0 stroke-emerald-800"
+                fill="none"
+                viewBox="0 0 24 24">
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>{{ session()->get('success') }}</span>
+        </div>
+    @endif
+
     <div class="w-full flex justify-center">
         <div class="hero bg-base-200 max-w-7xl">
             <div class="hero-content text-center">
@@ -45,9 +62,12 @@
                                 <td width="60%" class="text-center text-accent">
                                     {!! $question->question !!}
                                 </td>
-                                <td width="30%" class="text-center text-accent">
+                                <td width="30%" class="text-center text-accent flex justify-center w-full gap-x-4">
                                     <a href="{{ route('soal.edit', ['question' => $question->id]) }}" class="btn btn-sm">Update</a>
-                                    <button class="btn btn-sm">Delete</button>
+                                    <form id="formDelete_{{ $question->id }}" action="{{ route('soal.destroy', ['question' => $question->id]) }}" method="POST">
+                                        @csrf
+                                        <button class="btn btn-sm" onclick="if (!confirm('Apakah Anda yakin?')) {event.stopPropagation();event.preventDefault()} else { document.getElementById('formDelete_{{ $question->id }}').submit()};">Delete</button>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach

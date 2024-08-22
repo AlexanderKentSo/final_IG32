@@ -158,4 +158,11 @@ class SoalController extends Controller
             return back()->with('failed', 'Masukkan data dengan benar!');
         }
     }
+
+    public function destroy(McQuestion $question)
+    {
+        $question->delete();
+
+        return back()->with('success', "Berhasil menghapus pertanyaan!");
+    }
 }
