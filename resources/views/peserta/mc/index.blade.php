@@ -32,10 +32,10 @@
         </div>
         <div class="col-span-1 lg:col-span-2 bg-base-300/20 rounded-md shadow-xl">
             <div class="card-body">
-                <h2 class="card-title justify-center">Nomor 1</h2>
-                <div class="bg-white p-6 rounded">
+                <h2 class="card-title justify-center">Nomor {{  $questionNow->number }}</h2>
+                <form class="bg-white p-6 rounded">
                     {{--          Question          --}}
-                    <div class="mb-2">
+                    <div class="mb-6">
                         {!! $questionNow->question !!}
                     </div>
 
@@ -49,7 +49,7 @@
                             </label>
                         </div>
                     @endforeach
-                </div>
+                </form>
                 <div class="card-actions justify-between mt-4">
                     <button class="btn btn-accent btn-sm rounded-md disabled:bg-accent/50" disabled>Previous</button>
                     <button class="btn btn-accent btn-sm rounded-md px-6 disabled:bg-accent/50">Next</button>
