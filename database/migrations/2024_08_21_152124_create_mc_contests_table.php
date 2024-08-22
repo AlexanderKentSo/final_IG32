@@ -21,6 +21,7 @@ return new class extends Migration
                 ->onDelete('cascade');
             $table->double('total_score')->default(0.0);
             $table->timestamp('waktu_selesai')->nullable();
+            $table->timestamp('waktu_kumpul')->nullable();
             $table->timestamps();
         });
     }

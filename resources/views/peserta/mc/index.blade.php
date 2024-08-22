@@ -12,12 +12,25 @@
 @endsection
 
 @section('content')
-    <a
-        class="btn btn-accent btn-sm px-6 rounded mb-3"
-        href="{{ route('peserta.index') }}"
-    >
-        Back
-    </a>
+    <div class="flex justify-between items-center mb-3">
+        <div>
+            <a
+                class="btn btn-accent btn-sm px-6 rounded"
+                href="{{ route('peserta.index') }}"
+            >
+                Back
+            </a>
+        </div>
+        <div class="bg-primary px-5 py-1.5 rounded text-white">
+            <span class="countdown font-mono text-xl">
+              <span style="--value:10;" id="hours_left"></span>
+              :
+              <span style="--value:24;" id="mins_left"></span>
+              :
+              <span style="--value:1;" id="secs_left"></span>
+            </span>
+        </div>
+    </div>
 
     {{--  Content  --}}
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-y-5 lg:gap-x-6 select-none">

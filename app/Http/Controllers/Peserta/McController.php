@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\McContest;
 use App\Models\McQuestion;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class McController extends Controller
@@ -17,9 +18,9 @@ class McController extends Controller
         if ($contest == null) {
             $contest = McContest::create([
                 'team_id' => $team->id,
-                'total_score' => 0.0
+                'waktu_selesai' => Carbon::now()->addMinute(8)
             ]);
-        } else if ($contest->waktu_selesai != null) {
+        } else if ($contest->waktu_kumpul != null) {
             return redirect(route('peserta.index'))->with('failed', 'Jawaban Pilihan Ganda sudah dikumpulkan!');
         }
 
@@ -35,6 +36,7 @@ class McController extends Controller
 
         return view('peserta.mc.index', compact(
             'questions',
+            'nomor_terakhir',
             'previous',
             'next',
             'questionNow',

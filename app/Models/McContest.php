@@ -14,7 +14,9 @@ class McContest extends Model
 
     protected $fillable = [
         'team_id',
-        'total_score'
+        'total_score',
+        'waktu_kumpul',
+        'waktu_selesai'
     ];
 
     public function team() : BelongsTo
