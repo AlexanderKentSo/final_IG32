@@ -67,6 +67,8 @@ Route::group(
             ->name('store');
         Route::get('/{question}/edit', [Soal\SoalController::class, 'edit'])
             ->name('edit');
+        Route::post('/{question}/update', [Soal\SoalController::class, 'update'])
+            ->name('update');
     }
 );
 

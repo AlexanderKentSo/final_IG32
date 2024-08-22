@@ -36,6 +36,21 @@
                         <tr>
                             <td width="100%" colspan="3" class="text-center text-accent font-semibold">Belum ada soal</td>
                         </tr>
+                    @else
+                        @foreach($questions as $question)
+                            <tr>
+                                <td width="10%" class="text-center text-accent">
+                                    {{ $question->number }}
+                                </td>
+                                <td width="60%" class="text-center text-accent">
+                                    {!! $question->question !!}
+                                </td>
+                                <td width="30%" class="text-center text-accent">
+                                    <a href="{{ route('soal.edit', ['question' => $question->id]) }}" class="btn btn-sm">Update</a>
+                                    <button class="btn btn-sm">Delete</button>
+                                </td>
+                            </tr>
+                        @endforeach
                     @endif
                 </tbody>
             </table>
