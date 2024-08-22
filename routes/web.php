@@ -61,6 +61,12 @@ Route::group(
     function () {
         Route::get('/', [Soal\SoalController::class, 'index'])
             ->name('index');
+        Route::get('/create', [Soal\SoalController::class, 'create'])
+            ->name('create');
+        Route::post('/store', [Soal\SoalController::class, 'store'])
+            ->name('store');
+        Route::get('/{question}/edit', [Soal\SoalController::class, 'edit'])
+            ->name('edit');
     }
 );
 
