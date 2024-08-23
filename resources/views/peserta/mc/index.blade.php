@@ -23,11 +23,11 @@
         </div>
         <div class="bg-primary px-5 py-1.5 rounded text-white">
             <span class="countdown font-mono text-xl">
-              <span style="--value:10;" id="hours_left"></span>
+              <span id="hours_left"></span>
               :
-              <span style="--value:24;" id="mins_left"></span>
+              <span id="mins_left"></span>
               :
-              <span style="--value:1;" id="secs_left"></span>
+              <span id="secs_left"></span>
             </span>
         </div>
     </div>
@@ -37,7 +37,9 @@
         <div class="col-span-1 card bg-base-300/80 shadow-xl rounded-md">
             <div class="card-body">
                 <h2 class="card-title justify-center">Navigate</h2>
-                <p>If a dog chews shoes whose shoes does he choose?</p>
+                <div>
+
+                </div>
                 <div class="card-actions justify-end mt-4">
                     <button class="btn btn-primary btn-sm rounded-md">Finish and Submit</button>
                 </div>
@@ -46,7 +48,9 @@
         <div class="col-span-1 lg:col-span-2 bg-base-300/20 rounded-md shadow-xl">
             <div class="card-body">
                 <h2 class="card-title justify-center">Nomor {{  $questionNow->number }}</h2>
-                <form class="bg-white p-6 rounded">
+                <form class="bg-white p-6 rounded" id="submit_submission" method="POST" action="{{ route('peserta.mc.submit') }}">
+                    @csrf
+                    <input type="hidden" name="question_id" value="{{ $questionNow->id }}">
                     {{--          Question          --}}
                     <div class="mb-6">
                         {!! $questionNow->question !!}
@@ -57,21 +61,151 @@
                     @foreach($choices as $choice)
                         <div class="form-control">
                             <label class="label cursor-pointer justify-start gap-x-4">
-                                <input type="radio" name="answer" class="radio radio-sm radio-primary" value="{{ $choice->alphabet }}" />
+                                <input
+                                    type="radio"
+                                    name="answer"
+                                    class="radio radio-sm radio-primary"
+                                    value="{{ $choice->alphabet }}"
+                                    {{ !is_null($currentSubmission) ? ($currentSubmission->pivot->answer == $choice->alphabet ? 'checked' : '') : ''  }}
+                                />
                                 <span class="label-text">{{ $choice->choice }}</span>
                             </label>
                         </div>
                     @endforeach
                 </form>
                 <div class="card-actions justify-between mt-4">
-                    <button class="btn btn-accent btn-sm rounded-md disabled:bg-accent/50" disabled>Previous</button>
-                    <button class="btn btn-accent btn-sm rounded-md px-6 disabled:bg-accent/50">Next</button>
+                    <button
+                        class="btn btn-accent btn-sm rounded-md disabled:bg-accent/50"
+                        type="submit"
+                        {{ (is_null($previous)) ? 'disabled' : '' }}
+                        value="{{ $previous ?? 1 }}"
+                        form="submit_submission"
+                        name="target"
+                    >
+                        Previous
+                    </button>
+                    @if($number == $last_number)
+                        <button
+                            class="btn btn-primary btn-sm rounded-md px-6 disabled:bg-accent/50"
+                            type="button"
+                            onclick="document.getElementById('finishAttemptModal').showModal()"
+                        >
+                            Finish Attempt
+                        </button>
+                    @else
+                        <button
+                            class="btn btn-accent btn-sm rounded-md px-6 disabled:bg-accent/50"
+                            type="submit"
+                            value="{{ $next }}"
+                            name="target"
+                            form="submit_submission"
+                        >
+                            Next
+                        </button>
+                    @endif
                 </div>
             </div>
         </div>
     </div>
+
+    {{--  Modal Attempt  --}}
+    <dialog id="finishAttemptModal" class="modal">
+        <div class="modal-box w-11/12 max-w-xl rounded-md bg-base-100 select-none">
+            <form method="dialog">
+                <button class="btn btn-sm btn-circle absolute right-2 top-2 focus:outline-none">✕</button>
+            </form>
+            <h3 class="text-3xl text-primary select-none text-center text-header">Finish Attempt</h3>
+            <div class="flex justify-center mt-3">
+                <div
+                    class="bg-secondary/50 border border-base-300 w-1/2 h-96 rounded flex flex-col items-center justify-center shadow-2xl"
+                >
+                    <img src="{{ asset('images/maskot-kepala.svg') }}" alt="" class="w-1/2 mb-5">
+                    <h4 class="mb-3 font-semibold">Submit All and Finish?</h4>
+                    <button
+                        class="btn btn-primary btn-sm rounded-md px-6 disabled:bg-accent/50"
+                        type="submit"
+                        name="target"
+                        form="submit_submission"
+                        value="end"
+                        id="btnFinishAttempt"
+                    >
+                        Submit
+                    </button>
+                </div>
+            </div>
+        </div>
+    </dialog>
 @endsection
 
 @section('scripts')
+<script type="text/javascript">
+    var year = {{ now()->year }}
+    var month = {{ now()->month }}
+    var day = {{ now()->day }}
+    var hour = {{ now()->hour }}
+    var minute = {{ now()->minute }}
+    var second = {{ now()->second }}
+    var millisecond = {{ now()->millisecond }}
 
+    var isredirect = false
+
+    const countdown = () => {
+        let startDate = null;
+        var offerDate = new Date(
+            {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $contest->waktu_selesai)->year }},
+            {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $contest->waktu_selesai)->month }},
+            {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $contest->waktu_selesai)->day }},
+            {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $contest->waktu_selesai)->hour }},
+            {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $contest->waktu_selesai)->minute }},
+            {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $contest->waktu_selesai)->second }},
+            {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $contest->waktu_selesai)->millisecond }}
+        );
+
+        second += 1;
+        if (second > 60) {
+            minute += 1;
+            second -= 60;
+        }
+        if (minute > 60) {
+            hour += 1;
+            minute -= 60;
+        }
+
+        startDate = new Date(year, month, day, hour, minute, second, 0);
+
+
+        //offerTime will have the total millseconds
+        const offerTime = offerDate - startDate;
+
+
+        // 1 sec= 1000 ms
+        // 1 min = 60 sec
+        // 1 hour = 60 mins
+        var offerHours = Math.floor((offerTime / (1000 * 60 * 60)));
+        var offerMins = Math.floor((offerTime / (1000 * 60) % 60));
+        var offerSecs = Math.floor((offerTime / 1000) % 60);
+
+
+        //Kalau waktu sudah habis
+        if (offerHours <= 0 && offerMins <= 0 && offerSecs <= 0) {
+            if (!isredirect){
+                // console.log("SDSD");
+                $("#btnFinishAttempt").click();
+                isredirect = true;
+            }
+        }
+
+        if (offerHours > 0 || offerMins > 0 || offerSecs > 0) {
+            if (offerHours < 10) offerHours = "0" + offerHours
+            if (offerMins < 10) offerMins = "0" + offerMins
+            if (offerSecs < 10) offerSecs = "0" + offerSecs
+
+            $('#hours_left').attr("style", "--value:" + offerHours);
+            $('#mins_left').attr("style", "--value:" + offerMins);
+            $('#secs_left').attr("style", "--value:" + offerSecs);
+        }
+    }
+    setInterval(countdown, 1000);
+</script>
+</script>
 @endsection

@@ -55,6 +55,9 @@ Route::group(
 
         Route::get('/multiple-choice/{number}', [Peserta\McController::class, 'index'])
             ->name('mc.index');
+
+        Route::post('/multiple-choice/submit', [Peserta\McController::class, 'store'])
+            ->name('mc.submit');
     }
 );
 
