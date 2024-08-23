@@ -57,7 +57,8 @@ class McController extends Controller
             'questionNow',
             'currentSubmission',
             'number',
-            'contest'
+            'contest',
+            'team'
         ));
     }
 
@@ -104,6 +105,6 @@ class McController extends Controller
             'waktu_kumpul' => Carbon::now()
         ]);
 
-        return redirect(route('peserta.index'))->with('success', "You have finished your attempt!");
+        return redirect(route('peserta.index'))->with('success', "You have finished your attempt");
     }
 }

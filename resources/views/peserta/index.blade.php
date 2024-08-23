@@ -70,16 +70,20 @@
         </div>
 
         <div class="flex gap-x-5 w-full select-none">
-            <div class="w-full bg-neutral-content/80 p-4 rounded shadow-xl">
-                <h2 class="text-neutral text-header text-2xl tracking-widest mb-2">Multiple Choice</h2>
-                <p>Disini Anda dapat mengerjakan soal berbentuk <strong>PILIHAN GANDA</strong>.</p>
+            <div class="w-full bg-neutral-content/75 p-4 rounded shadow-xl flex flex-col justify-between">
+                <div>
+                    <h2 class="text-neutral text-header text-2xl tracking-widest mb-2">Multiple Choice</h2>
+                    <p>Disini Anda dapat mengerjakan soal berbentuk <strong>PILIHAN GANDA</strong>.</p>
+                </div>
                 <div class="mt-3 flex justify-end">
                     <a href="{{ route('peserta.mc.index', ['number' => 1]) }}" class="btn btn-sm px-4 rounded-md">Buka</a>
                 </div>
             </div>
-            <div class="w-full bg-base-300/80 p-4 rounded shadow-xl">
-                <h2 class="text-neutral text-header text-2xl tracking-widest mb-2">Final</h2>
-                <p>Disini Anda dapat memasukkan <strong>JAWABAN AKHIR</strong> dari soal yang telah diberikan oleh panitia.</p>
+            <div class="w-full bg-base-300/80 p-4 rounded shadow-xl flex flex-col justify-between">
+                <div>
+                    <h2 class="text-neutral text-header text-2xl tracking-widest mb-2">Final</h2>
+                    <p>Disini Anda dapat memasukkan <strong>JAWABAN AKHIR</strong> dari soal yang telah diberikan oleh panitia.</p>
+                </div>
                 <div class="mt-3 flex justify-end">
                     <a href="" class="btn btn-sm rounded-md px-4">Buka</a>
                 </div>

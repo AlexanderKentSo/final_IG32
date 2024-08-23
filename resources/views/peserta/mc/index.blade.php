@@ -33,18 +33,43 @@
 
     {{--  Content  --}}
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-y-5 lg:gap-x-6 select-none">
-        <div class="col-span-1 card bg-base-300/80 shadow-xl rounded-md">
+        {{--    Navigation    --}}
+        <div class="col-span-1 card bg-base-300/80 shadow-xl rounded-md order-2 lg:order-1">
             <div class="card-body">
-                <h2 class="card-title justify-center">Navigate</h2>
-                <div>
-                    
+                <h2 class="card-title justify-center mb-2">Navigate</h2>
+                <div class="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-12 lg:grid-cols-5 2xl:grid-cols-6 gap-5">
+                    @foreach($questions as $question)
+                        @php
+                            $classColor = "";
+                            if ($question->number == $number) {
+                                $classColor = 'btn-primary text-base-100';
+                            } else if (
+                                isset(
+                                    $question->teams()->where('team_id', $team->id)
+                                            ->first()->pivot->answer
+                                )
+                            ) {
+                                $classColor = 'btn-accent';
+                            }
+                        @endphp
+                        <button
+                            class="btn rounded-full {{ $classColor }}"
+                            form="submit_submission"
+                            name="target"
+                            value="{{ $question->number }}"
+                        >
+                            {{ $question->number }}
+                        </button>
+                    @endforeach
                 </div>
             </div>
         </div>
-        <div class="col-span-1 lg:col-span-2 bg-base-300/20 rounded-md shadow-xl">
+
+        {{--    Form    --}}
+        <div class="col-span-1 lg:col-span-2 bg-base-300/20 rounded-md shadow-xl order-1 lg:order-2">
             <div class="card-body">
-                <h2 class="card-title justify-center">Nomor {{  $questionNow->number }}</h2>
-                <form class="bg-white p-6 rounded" id="submit_submission" method="POST" action="{{ route('peserta.mc.submit') }}">
+                <h2 class="card-title justify-center">Number {{  $questionNow->number }}</h2>
+                <form class="bg-white p-4 sm:p-6 rounded" id="submit_submission" method="POST" action="{{ route('peserta.mc.submit') }}">
                     @csrf
                     <input type="hidden" name="question_id" value="{{ $questionNow->id }}">
                     {{--          Question          --}}
@@ -113,7 +138,7 @@
             <h3 class="text-3xl text-primary select-none text-center text-header">Finish Attempt</h3>
             <div class="flex justify-center mt-3">
                 <div
-                    class="bg-secondary/50 border border-base-300 w-1/2 h-96 rounded flex flex-col items-center justify-center shadow-2xl"
+                    class="bg-secondary/50 border border-2 border-base-300 w-1/2 h-96 rounded flex flex-col items-center justify-center shadow-2xl"
                 >
                     <img src="{{ asset('images/maskot-kepala.svg') }}" alt="" class="w-1/2 mb-5">
                     <h4 class="mb-3 font-semibold">Submit All and Finish?</h4>
@@ -138,16 +163,30 @@
         // Klik Kanan
         document.addEventListener('contextmenu', event => {
             event.preventDefault()
-            alert('This Feature is Disabled');
+            Swal.fire({
+                title: 'Error!',
+                text: 'This Feature is Disabled',
+                icon: 'error',
+            });
             return false;
         });
 
         // Other shortcut
         document.onkeydown = function (e) {
-            if(e.keyCode == 123) { alert('This Feature is Disabled'); return false; } // Key F12 -> Menu Application
-            if(e.ctrlKey && e.shiftKey && e.keyCode == 73){ alert('This Feature is Disabled'); return false; } // Ctrl Shift i -> Menu Application
-            if(e.ctrlKey && e.shiftKey && e.keyCode == 74) { alert('This Feature is Disabled'); return false; } // Ctrl shift j -> Menu Console
-            if(e.ctrlKey && e.keyCode == 85) { alert('This Feature is Disabled'); return false; } // Ctrl U -> View Page Source
+            if (
+                (e.keyCode == 123) ||
+                (e.ctrlKey && e.shiftKey && e.keyCode == 73) ||
+                (e.ctrlKey && e.shiftKey && e.keyCode == 74) ||
+                (e.ctrlKey && e.keyCode == 85)
+            ) {
+                e.preventDefault();
+                Swal.fire({
+                    title: 'Warning',
+                    text: 'This Feature is Disabled!',
+                    icon: 'warning',
+                });
+                return false;
+            }
         }
     </script>
     <script type="text/javascript">

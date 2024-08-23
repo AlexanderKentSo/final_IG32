@@ -46,7 +46,7 @@
     </style>
     @yield('styles')
 </head>
-<body>
+<body class="antialiased">
 {{--  Form Logout  --}}
 <form action="{{ route('logout') }}" id="formLogout" method="POST" class="bg-none">
     @csrf

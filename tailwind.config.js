@@ -48,6 +48,11 @@ module.exports = {
             }
         ],
         darkTheme: 'dark'
-    }
+    },
+    safelist: [
+        'btn-primary',
+        'btn-accent',
+        'text-base-100'
+    ]
 }
 
