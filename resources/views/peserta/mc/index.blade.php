@@ -4,7 +4,6 @@
 ])
 
 @section('cdn')
-
 @endsection
 
 @section('styles')
@@ -39,9 +38,6 @@
                 <h2 class="card-title justify-center">Navigate</h2>
                 <div>
 
-                </div>
-                <div class="card-actions justify-end mt-4">
-                    <button class="btn btn-primary btn-sm rounded-md">Finish and Submit</button>
                 </div>
             </div>
         </div>
@@ -138,74 +134,89 @@
 @endsection
 
 @section('scripts')
-<script type="text/javascript">
-    var year = {{ now()->year }}
-    var month = {{ now()->month }}
-    var day = {{ now()->day }}
-    var hour = {{ now()->hour }}
-    var minute = {{ now()->minute }}
-    var second = {{ now()->second }}
-    var millisecond = {{ now()->millisecond }}
+    <script>
+        // Klik Kanan
+        document.addEventListener('contextmenu', event => {
+            event.preventDefault()
+            alert('This Feature is Disabled');
+            return false;
+        });
 
-    var isredirect = false
-
-    const countdown = () => {
-        let startDate = null;
-        var offerDate = new Date(
-            {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $contest->waktu_selesai)->year }},
-            {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $contest->waktu_selesai)->month }},
-            {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $contest->waktu_selesai)->day }},
-            {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $contest->waktu_selesai)->hour }},
-            {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $contest->waktu_selesai)->minute }},
-            {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $contest->waktu_selesai)->second }},
-            {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $contest->waktu_selesai)->millisecond }}
-        );
-
-        second += 1;
-        if (second > 60) {
-            minute += 1;
-            second -= 60;
+        // Other shortcut
+        document.onkeydown = function (e) {
+            if(e.keyCode == 123) { alert('This Feature is Disabled'); return false; } // Key F12 -> Menu Application
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 73){ alert('This Feature is Disabled'); return false; } // Ctrl Shift i -> Menu Application
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 74) { alert('This Feature is Disabled'); return false; } // Ctrl shift j -> Menu Console
+            if(e.ctrlKey && e.keyCode == 85) { alert('This Feature is Disabled'); return false; } // Ctrl U -> View Page Source
         }
-        if (minute > 60) {
-            hour += 1;
-            minute -= 60;
-        }
+    </script>
+    <script type="text/javascript">
+        var year = {{ now()->year }};
+        var month = {{ now()->month }};
+        var day = {{ now()->day }};
+        var hour = {{ now()->hour }};
+        var minute = {{ now()->minute }};
+        var second = {{ now()->second }};
+        var millisecond = {{ now()->millisecond }};
 
-        startDate = new Date(year, month, day, hour, minute, second, 0);
+        var isredirect = false;
+
+        const countdown = () => {
+            let startDate = null;
+            var offerDate = new Date(
+                {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $contest->waktu_selesai)->year }},
+                {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $contest->waktu_selesai)->month }},
+                {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $contest->waktu_selesai)->day }},
+                {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $contest->waktu_selesai)->hour }},
+                {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $contest->waktu_selesai)->minute }},
+                {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $contest->waktu_selesai)->second }},
+                {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $contest->waktu_selesai)->millisecond }}
+            );
+
+            second += 1;
+            if (second > 60) {
+                minute += 1;
+                second -= 60;
+            }
+            if (minute > 60) {
+                hour += 1;
+                minute -= 60;
+            }
+
+            startDate = new Date(year, month, day, hour, minute, second, 0);
 
 
-        //offerTime will have the total millseconds
-        const offerTime = offerDate - startDate;
+            //offerTime will have the total millseconds
+            const offerTime = offerDate - startDate;
 
 
-        // 1 sec= 1000 ms
-        // 1 min = 60 sec
-        // 1 hour = 60 mins
-        var offerHours = Math.floor((offerTime / (1000 * 60 * 60)));
-        var offerMins = Math.floor((offerTime / (1000 * 60) % 60));
-        var offerSecs = Math.floor((offerTime / 1000) % 60);
+            // 1 sec= 1000 ms
+            // 1 min = 60 sec
+            // 1 hour = 60 mins
+            var offerHours = Math.floor((offerTime / (1000 * 60 * 60)));
+            var offerMins = Math.floor((offerTime / (1000 * 60) % 60));
+            var offerSecs = Math.floor((offerTime / 1000) % 60);
 
 
-        //Kalau waktu sudah habis
-        if (offerHours <= 0 && offerMins <= 0 && offerSecs <= 0) {
-            if (!isredirect){
-                // console.log("SDSD");
-                $("#btnFinishAttempt").click();
-                isredirect = true;
+            //Kalau waktu sudah habis
+            if (offerHours <= 0 && offerMins <= 0 && offerSecs <= 0) {
+                if (!isredirect){
+                    // console.log("SDSD");
+                    $("#btnFinishAttempt").click();
+                    isredirect = true;
+                }
+            }
+
+            if (offerHours > 0 || offerMins > 0 || offerSecs > 0) {
+                if (offerHours < 10) offerHours = "0" + offerHours
+                if (offerMins < 10) offerMins = "0" + offerMins
+                if (offerSecs < 10) offerSecs = "0" + offerSecs
+
+                $('#hours_left').attr("style", "--value:" + offerHours);
+                $('#mins_left').attr("style", "--value:" + offerMins);
+                $('#secs_left').attr("style", "--value:" + offerSecs);
             }
         }
-
-        if (offerHours > 0 || offerMins > 0 || offerSecs > 0) {
-            if (offerHours < 10) offerHours = "0" + offerHours
-            if (offerMins < 10) offerMins = "0" + offerMins
-            if (offerSecs < 10) offerSecs = "0" + offerSecs
-
-            $('#hours_left').attr("style", "--value:" + offerHours);
-            $('#mins_left').attr("style", "--value:" + offerMins);
-            $('#secs_left').attr("style", "--value:" + offerSecs);
-        }
-    }
-    setInterval(countdown, 1000);
-</script>
-</script>
+        setInterval(countdown, 1000);
+    </script>
 @endsection
