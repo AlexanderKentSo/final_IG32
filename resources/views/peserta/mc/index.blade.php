@@ -37,7 +37,7 @@
             <div class="card-body">
                 <h2 class="card-title justify-center">Navigate</h2>
                 <div>
-
+                    
                 </div>
             </div>
         </div>
