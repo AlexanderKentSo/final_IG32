@@ -26,8 +26,8 @@ class Team extends Model
         return $this->hasMany(History::class, 'team_id');
     }
 
-    public function cards() : HasMany {
-        return $this->hasMany(TeamCard::class, 'team_id');
+    public function cards() : HasOne {
+        return $this->hasOne(TeamCard::class, 'team_id');
     }
 
     public function mcContest() : HasOne

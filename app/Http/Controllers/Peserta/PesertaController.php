@@ -10,7 +10,7 @@ class PesertaController extends Controller
     public function index()
     {
         $tim = auth()->user()->team;
-        $kartu = $tim->cards()->orderBy('created_at', "DESC")->first();
+        $kartu = $tim->cards()->first();
         $hargaJual = number_format(
             $tim->questions()->get()->sum('pivot.score') * 150000,
             0,

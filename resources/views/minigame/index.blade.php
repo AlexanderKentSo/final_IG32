@@ -466,6 +466,8 @@
                 },
                 success: function (response) {
                     reset();
+                    // console.log($("#nomor-1-question").html());
+                    // $("#nomor-1-question").html()
                     $("#leftOver").text(response.leftover);
                 },
                 error: function (xhr) {
@@ -552,6 +554,7 @@
                     $("#nomor-"+ board +"-question").html(options);
                     inputs.attr('show', "1");
                     reset();
+                    $("#leftOver").text(response.leftover);
 
                     // Tampilkan Kartu
                     $("#cardImg").attr('src', "#");

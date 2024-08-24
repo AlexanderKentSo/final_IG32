@@ -157,7 +157,7 @@ class MiniGameController extends Controller
     public function leftOver(Request $request)
     {
         $team = Team::find($request->get('team_id'));
-        $leftover = 3 - $team->cards()->count();
+        $leftover = 3 - $team->histories()->count();
 
         return response()->json(compact('leftover'), 200);
     }
@@ -169,7 +169,7 @@ class MiniGameController extends Controller
             $team = Team::find($request->get('team_id'));
             $question = Question::find($request->get('question_id'));
 
-            if ($team->cards()->count() >= 3) {
+            if ($team->histories()->count() >= 3) {
                 return response()->json([
                     'status' => "failed",
                     'msg' => 'Tim hanya dapat menjawab soal dengan benar sebanyak maksimal 3 kali!'
@@ -228,10 +228,19 @@ class MiniGameController extends Controller
             $pickedCard = $availableCards[0];
 
             // Simpan kartu
-            $teamCard = TeamCard::create([
-                'card_id' => $pickedCard->id,
-                'team_id' => $team->id
-            ]);
+//            $teamCard = TeamCard::create([
+//                'card_id' => $pickedCard->id,
+//                'team_id' => $team->id
+//            ]);
+            TeamCard::updateOrCreate(
+                [
+                    'team_id' => $team->id
+                ],
+                ['card_id' => $pickedCard->id]
+            );
+
+            // Leftover
+            $leftover = 3 - $team->histories()->count();
 
             DB::commit();
 
@@ -240,7 +249,8 @@ class MiniGameController extends Controller
                 'msg' => 'Jawaban Anda benar!',
                 'questions' => $questionBoard,
                 'board' => $board->board,
-                'card' => $pickedCard
+                'card' => $pickedCard,
+                'leftover' => $leftover
             ], 200);
         } catch (\Exception $x) {
             DB::rollBack();
