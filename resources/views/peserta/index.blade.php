@@ -85,7 +85,7 @@
                     <p>Disini Anda dapat memasukkan <strong>JAWABAN AKHIR</strong> dari soal yang telah diberikan oleh panitia.</p>
                 </div>
                 <div class="mt-3 flex justify-end">
-                    <a href="" class="btn btn-sm rounded-md px-4">Buka</a>
+                    <a href="{{ route('peserta.final.index') }}" class="btn btn-sm rounded-md px-4">Buka</a>
                 </div>
             </div>
         </div>

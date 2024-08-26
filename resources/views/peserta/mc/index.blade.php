@@ -4,6 +4,8 @@
 ])
 
 @section('cdn')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 @endsection
 
 @section('styles')
@@ -160,13 +162,18 @@
 
 @section('scripts')
     <script>
+        var notyf = new Notyf();
         // Klik Kanan
         document.addEventListener('contextmenu', event => {
             event.preventDefault()
-            Swal.fire({
-                title: 'Error!',
-                text: 'This Feature is Disabled',
-                icon: 'error',
+            notyf.error({
+                message: 'This Feature is Disabled',
+                duration:2000,
+                dismissible: true,
+                position: {
+                    x: 'center',
+                    y: 'top',
+                },
             });
             return false;
         });
@@ -180,10 +187,14 @@
                 (e.ctrlKey && e.keyCode == 85)
             ) {
                 e.preventDefault();
-                Swal.fire({
-                    title: 'Warning',
-                    text: 'This Feature is Disabled!',
-                    icon: 'warning',
+                notyf.error({
+                    message: 'This Feature is Disabled',
+                    duration:2000,
+                    dismissible: true,
+                    position: {
+                        x: 'center',
+                        y: 'top',
+                    },
                 });
                 return false;
             }

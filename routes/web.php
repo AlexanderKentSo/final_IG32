@@ -58,6 +58,15 @@ Route::group(
 
         Route::post('/multiple-choice/submit', [Peserta\McController::class, 'store'])
             ->name('mc.submit');
+
+        Route::get('/final', [Peserta\PesertaController::class, 'finalIndex'])
+            ->name('final.index');
+
+        Route::get('/final/strategy/{strategy}', [Peserta\PesertaController::class, 'getStrategy'])
+            ->name('final.strategy');
+
+        Route::post('/final.submit', [Peserta\PesertaController::class, 'submit'])
+            ->name('final.submit');
     }
 );
 
