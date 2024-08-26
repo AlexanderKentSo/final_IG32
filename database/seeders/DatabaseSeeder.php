@@ -46,5 +46,7 @@ class DatabaseSeeder extends Seeder
             false,
             ["path" => "database/data/3-mc_choices.csv", "model" => McChoice::class]
         );
+
+        $this->call(StrategySeeder::class);
     }
 }

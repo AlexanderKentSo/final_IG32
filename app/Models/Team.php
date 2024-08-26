@@ -46,4 +46,9 @@ class Team extends Model
             ->withPivot(['answer', 'score'])
             ->withTimestamps();
     }
+
+    public function final() : HasOne
+    {
+        return $this->hasOne(FinalModel::class, 'team_id');
+    }
 }
