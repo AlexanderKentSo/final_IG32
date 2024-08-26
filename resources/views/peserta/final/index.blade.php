@@ -1,6 +1,6 @@
 @extends('peserta.layout.index', [
-    'pageTitle' => 'Dashboard | Industrial Games',
-    'navTitle' => 'Dashboard',
+    'pageTitle' => 'Final | Industrial Games',
+    'navTitle' => 'Final',
 ])
 
 @section('cdn')
@@ -123,7 +123,7 @@
                         @endforeach
                     </select>
                 </label>
-                
+
                 <label class="form-control w-full mt-2">
                     <div class="label">
                         <span class="label-text font-bold">HPP:</span>
