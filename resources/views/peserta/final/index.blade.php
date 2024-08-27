@@ -4,7 +4,8 @@
 ])
 
 @section('cdn')
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 @endsection
 
 @section('styles')
@@ -195,6 +196,46 @@
 @endsection
 
 @section('scripts')
+    <script>
+        var notyf = new Notyf();
+        // Klik Kanan
+        document.addEventListener('contextmenu', event => {
+            event.preventDefault()
+            notyf.error({
+                message: 'This Feature is Disabled',
+                duration:2000,
+                dismissible: true,
+                position: {
+                    x: 'center',
+                    y: 'top',
+                },
+            });
+            return false;
+        });
+
+        // Other shortcut
+        document.onkeydown = function (e) {
+            if (
+                (e.keyCode == 123) ||
+                (e.ctrlKey && e.shiftKey && e.keyCode == 73) ||
+                (e.ctrlKey && e.shiftKey && e.keyCode == 74) ||
+                (e.ctrlKey && e.keyCode == 85)
+            ) {
+                e.preventDefault();
+                notyf.error({
+                    message: 'This Feature is Disabled',
+                    duration:2000,
+                    dismissible: true,
+                    position: {
+                        x: 'center',
+                        y: 'top',
+                    },
+                });
+                return false;
+            }
+        }
+    </script>
+
     <script>
         $("#strategy").on('change', function () {
             let strategy_id = $(this).val();

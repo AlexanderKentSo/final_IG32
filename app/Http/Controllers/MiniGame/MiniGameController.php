@@ -139,6 +139,7 @@ class MiniGameController extends Controller
 
     public function getActiveCell(Request $request) {
         $question = Question::find($request->get('question_id'));
+        $quest = $question->question;
 
         $number = $question->number;
 
@@ -150,7 +151,8 @@ class MiniGameController extends Controller
             'cells',
             'number',
             'rows',
-            'cols'
+            'cols',
+            'quest'
         ), 200);
     }
 

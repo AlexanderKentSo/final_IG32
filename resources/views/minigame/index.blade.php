@@ -315,6 +315,7 @@
                             Answer
                         </button>
                     </div>
+                    <button class="btn rounded" id="btn-question-1" onclick="modalQuestion1.showModal()" disabled>Show Question</button>
                 </div>
                 <br />
                 <div class="flex justify-center pl-14 select-none">
@@ -374,6 +375,7 @@
                             Answer
                         </button>
                     </div>
+                    <button class="btn rounded" id="btn-question-2" onclick="modalQuestion1.showModal()" disabled>Show Question</button>
                 </div>
                 <br />
                 <div class="flex justify-center pl-14 select-none">
@@ -424,7 +426,27 @@
                 style="border-width: 5px;"
             >
                 <img src="{{ asset('images/maskot.svg') }}" alt="" class="w-1/2" draggable="false" id="cardImg">
-                <p class="p-2 font-bold text-center text-accent" id="cardDesc">asdsadadsd</p>
+                <p class="p-2 font-bold text-center text-accent" id="cardDesc"></p>
+            </div>
+        </div>
+    </div>
+    <form method="dialog" class="modal-backdrop">
+        <button>close</button>
+    </form>
+</dialog>
+
+{{--  Modal Question 1  --}}
+<dialog id="modalQuestion1" class="modal">
+    <div class="modal-box w-11/12 max-w-xl rounded-md bg-base-100 select-none">
+        <h3 class="text-3xl text-primary select-none text-center text-body">Question</h3>
+        <h4 class="text-2xl text-primary select-none text-center text-header mt-5" id="cardTitle"></h4>
+        <div class="flex justify-center mt-3">
+            <div
+                class="bg-secondary/50 border border-base-300 rounded flex flex-col items-center justify-center shadow-2xl"
+                style="border-width: 5px;"
+            >
+{{--                <img src="{{ asset('images/maskot.svg') }}" alt="" class="w-1/2" draggable="false" id="cardImg">--}}
+                <p class="p-6 font-bold text-center text-accent" id="questionDesc"></p>
             </div>
         </div>
     </div>
@@ -477,15 +499,15 @@
         }
     })
 
-    const reset = () => {
-        $(".square").each(function (id) {
+    const reset = (board) => {
+        $(".square[board=" + board + "]").each(function (id) {
             $(this).css('background-color', "");
             $(this).attr('disabled', true);
             $(this).blur();
             if ($(this).attr("show") === "0") {
                 $(this).val("");
             }
-            $(this).removeClass('current-state');
+            $(this).removeClass('current-state-' + board);
         })
     }
 
@@ -505,7 +527,7 @@
             return;
         }
 
-        let inputs = $(".current-state");
+        let inputs = $(".current-state-" + board);
         if (inputs.length < 1) {
             Swal.fire({
                 title: 'Error!',
@@ -553,7 +575,7 @@
                     }
                     $("#nomor-"+ board +"-question").html(options);
                     inputs.attr('show', "1");
-                    reset();
+                    reset(board);
                     $("#leftOver").text(response.leftover);
 
                     // Tampilkan Kartu
@@ -600,6 +622,9 @@
             return;
         }
 
+        let btnQuestion1 = $("#btn-question-1");
+        btnQuestion1.attr('disabled', true);
+
         $.ajax({
             type: 'POST',
             url: '{{ route('minigame.cell.active') }}',
@@ -608,7 +633,7 @@
                 'question_id': question_id
             },
             success: function (response) {
-                reset();
+                reset(1);
                 let rows = response.rows;
                 let cols = response.cols;
                 $("[direction*=:direction]".replace(":direction", response.number))
@@ -626,10 +651,11 @@
                                 $(this).blur();
                             }
 
-                            $(this).addClass('current-state');
+                            $(this).addClass('current-state-1');
                         }
                     });
-
+                $("#questionDesc").text(response.quest);
+                btnQuestion1.attr('disabled', false);
                 console.log(response);
             },
             error: function (xhr) {
@@ -657,6 +683,9 @@
             return;
         }
 
+        let btnQuestion2 = $("#btn-question-2");
+        btnQuestion2.attr('disabled', true);
+
         $.ajax({
             type: 'POST',
             url: '{{ route('minigame.cell.active') }}',
@@ -665,7 +694,7 @@
                 'question_id': question_id
             },
             success: function (response) {
-                reset();
+                reset(2);
                 let rows = response.rows;
                 let cols = response.cols;
                 $("[direction*=:direction]".replace(":direction", response.number))
@@ -683,9 +712,11 @@
                                 $(this).blur();
                             }
 
-                            $(this).addClass('current-state');
+                            $(this).addClass('current-state-2');
                         }
                     });
+                $("#questionDesc").text(response.quest);
+                btnQuestion2.attr('disabled', false);
 
                 console.log(response);
             },
