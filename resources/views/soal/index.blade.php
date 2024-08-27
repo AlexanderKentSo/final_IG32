@@ -40,7 +40,7 @@
     {{--  Table  --}}
     <div class="overflow-auto mt-8">
         <div class="overflow-auto" style="max-height: 37.5rem;">
-            <table class="table table-pin-cols">
+            <table class="table table-pin-rows">
                 <thead>
                     <tr>
                         <th width="10%" class="text-center bg-secondary text-accent font-semibold">Number</th>
@@ -70,7 +70,7 @@
                                     <a href="{{ route('soal.edit', ['question' => $question->id]) }}" class="btn btn-warning btn-sm">Update</a>
                                     <form id="formDelete_{{ $question->id }}" action="{{ route('soal.destroy', ['question' => $question->id]) }}" method="POST">
                                         @csrf
-                                        <button class="btn bg-red-800 btn-sm" onclick="if (!confirm('Apakah Anda yakin?')) {event.stopPropagation();event.preventDefault()} else { document.getElementById('formDelete_{{ $question->id }}').submit()};">Delete</button>
+                                        <button class="btn bg-red-400 text-red-50 btn-sm" onclick="if (!confirm('Apakah Anda yakin?')) {event.stopPropagation();event.preventDefault()} else { document.getElementById('formDelete_{{ $question->id }}').submit()};">Delete</button>
                                     </form>
                                 </td>
                             </tr>
