@@ -645,7 +645,7 @@
                         if (
                             rows.includes(row) &&
                             cols.includes(col) &&
-                            $(this).attr('board') == "1"
+                            $(this).attr("board") == "1"
                         ) {
                             console.log(row , col, $(this).attr("show"));
                             if ($(this).attr("show") == "0") {
@@ -654,7 +654,7 @@
                                 $(this).blur();
                             }
 
-                            $(this).addClass('current-state-1');
+                            $(this).addClass("current-state-1");
                         }
                     });
                 $("#questionDesc").text(response.quest);
