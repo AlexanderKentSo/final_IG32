@@ -642,6 +642,7 @@
                     .each(function (id) {
                         let row = parseInt($(this).attr("row"));
                         let col = parseInt($(this).attr("col"));
+                        console.log(row , col, $(this).attr("board"), $(this).attr("show"));
                         if (
                             rows.includes(row) &&
                             cols.includes(col) &&
