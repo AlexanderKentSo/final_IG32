@@ -144,8 +144,18 @@ class MiniGameController extends Controller
         $number = $question->number;
 
         $cells = $question->letters()->get();
-        $rows = $cells->pluck('row');
-        $cols = $cells->pluck('col');
+        $rows_ = $cells->pluck('row');
+        $cols_ = $cells->pluck('col');
+        $rows = [];
+        $cols = [];
+
+        foreach ($rows_ as $r) {
+            $rows[] = (int)$r;
+        }
+
+        foreach ($cols_ as $c) {
+            $cols[] = (int)$c;
+        }
 
         return response()->json(compact(
             'cells',
