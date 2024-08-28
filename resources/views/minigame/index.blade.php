@@ -637,11 +637,12 @@
                 reset(1);
                 let rows = response.rows;
                 let cols = response.cols;
+                console.log(response);
                 $("[direction*=:direction]".replace(":direction", response.number))
                     .each(function (id) {
                         let row = parseInt($(this).attr("row"));
                         let col = parseInt($(this).attr("col"));
-
+                        console.log($(this));
                         if (
                             rows.includes(row) &&
                             cols.includes(col) &&
