@@ -645,9 +645,9 @@
                         if (
                             rows.includes(row) &&
                             cols.includes(col) &&
-                            $(this).attr('board') === "1"
+                            $(this).attr('board') == "1"
                         ) {
-                            if ($(this).attr("show") === "0") {
+                            if ($(this).attr("show") == "0") {
                                 console.log($(this));
                                 $(this).attr("disabled", false);
                                 $(this).blur();
