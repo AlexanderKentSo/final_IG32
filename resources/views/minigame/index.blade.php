@@ -643,8 +643,8 @@
                         let row = parseInt($(this).attr("row"));
                         let col = parseInt($(this).attr("col"));
                         if (
-                            rows.includes(row) &&
-                            cols.includes(col) &&
+                            rows.includes(row.toString()) &&
+                            cols.includes(col.toString()) &&
                             $(this).attr("board") == "1"
                         ) {
                             console.log(row , col, $(this).attr("show"));
