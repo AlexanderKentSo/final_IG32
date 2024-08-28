@@ -642,12 +642,12 @@
                     .each(function (id) {
                         let row = parseInt($(this).attr("row"));
                         let col = parseInt($(this).attr("col"));
-                        console.log(row , col, $(this).attr("board"), $(this).attr("show"));
                         if (
                             rows.includes(row) &&
                             cols.includes(col) &&
                             $(this).attr('board') == "1"
                         ) {
+                            console.log(row , col, $(this).attr("show"));
                             if ($(this).attr("show") == "0") {
                                 console.log($(this));
                                 $(this).attr("disabled", false);
