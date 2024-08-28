@@ -52,6 +52,8 @@ class LoginController extends Controller
                     return redirect()->intended('/peserta');
                 case "soal":
                     return redirect()->intended('/soal');
+                case "acara":
+                    return redirect()->intended('/acara');
                 default:
                     abort(404);
             }

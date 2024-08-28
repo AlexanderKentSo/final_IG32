@@ -17,8 +17,8 @@ class PesertaController extends Controller
         $hargaJual = number_format(
             $tim->questions()->get()->sum('pivot.score') * 150000,
             0,
-            ',',
-            '.'
+            '.',
+            ','
         );
 
         return view('peserta.index', compact(
@@ -41,8 +41,8 @@ class PesertaController extends Controller
         $hargaJual = number_format(
             $tim->questions()->get()->sum('pivot.score') * 150000,
             0,
-            ',',
-            '.'
+            '.',
+            ','
         );
 
         $strategies = Strategy::all();

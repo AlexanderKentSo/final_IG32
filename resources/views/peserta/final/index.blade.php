@@ -129,28 +129,28 @@
                     <div class="label">
                         <span class="label-text font-bold">HPP:</span>
                     </div>
-                    <input type="number" step="0.0001" placeholder="hpp ..." name="hpp" class="input input-bordered w-full rounded"  />
+                    <input type="number" step="0.01" placeholder="hpp ..." name="hpp" class="input input-bordered w-full rounded"  />
                 </label>
 
                 <label class="form-control w-full mt-2">
                     <div class="label">
                         <span class="label-text font-bold">Laba Kotor:</span>
                     </div>
-                    <input type="number" step="0.0001" placeholder="laba kotor ..." name="laba_kotor" class="input input-bordered w-full rounded"  />
+                    <input type="number" step="0.01" placeholder="laba kotor ..." name="laba_kotor" class="input input-bordered w-full rounded"  />
                 </label>
 
                 <label class="form-control w-full mt-2">
                     <div class="label">
                         <span class="label-text font-bold">Laba Bersih:</span>
                     </div>
-                    <input type="number" step="0.0001" placeholder="laba bersih ..." name="laba_bersih" class="input input-bordered w-full rounded"  />
+                    <input type="number" step="0.01" placeholder="laba bersih ..." name="laba_bersih" class="input input-bordered w-full rounded"  />
                 </label>
 
                 <label class="form-control w-full mt-2">
                     <div class="label">
                         <span class="label-text font-bold">Target Cost:</span>
                     </div>
-                    <input type="number" step="0.0001" placeholder="target cost ..." name="target_cost" class="input input-bordered w-full rounded" />
+                    <input type="number" step="0.01" placeholder="target cost ..." name="target_cost" class="input input-bordered w-full rounded" />
                 </label>
             </form>
 

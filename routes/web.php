@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\MiniGame;
 use App\Http\Controllers\Peserta;
 use App\Http\Controllers\Soal;
+use App\Http\Controllers\Acara;
 
 /*
 |--------------------------------------------------------------------------
@@ -86,6 +87,17 @@ Route::group(
             ->name('update');
         Route::post('/{question}/destroy', [Soal\SoalController::class, 'destroy'])
             ->name('destroy');
+    }
+);
+
+// Acara
+Route::group(
+    ['middleware' => 'acara', 'prefix' => 'acara', 'as' => 'acara.'],
+    function () {
+        Route::get('/', [Acara\AcaraController::class, 'index'])
+            ->name('index');
+        Route::get('/submission/{team}', [Acara\AcaraController::class, 'show'])
+            ->name('show');
     }
 );
 
