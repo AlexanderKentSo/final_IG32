@@ -25,6 +25,8 @@ class RedirectIfAuthenticated
                     return redirect()->intended('/minigame');
                 } else if (Auth::user()->role == 'peserta') {
                     return redirect()->intended('/peserta');
+                } else if(Auth::user()->role == 'acara'){
+                    return redirect()->intended('/acara');
                 }
                 return redirect(RouteServiceProvider::HOME);
             }
