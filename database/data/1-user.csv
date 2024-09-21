@@ -1,15 +1,12 @@
 id,username,password,role
-1,penpos1,$2y$10$hIysWoOLFKKa2Qb3yV7laOV3gXfvXZMeykVs5Ee/HncUtVB4lSpgS,penpos
-2,minigame1,$2y$10$hIysWoOLFKKa2Qb3yV7laOV3gXfvXZMeykVs5Ee/HncUtVB4lSpgS,minigame
+1,minigame1,$2y$10$A2a1/6jumukU19ndFLBPs.Ydk7kcoFxXKpIruOXozNceE/mGHxcj2,minigame
+2,minigame2,$2y$10$A2a1/6jumukU19ndFLBPs.Ydk7kcoFxXKpIruOXozNceE/mGHxcj2,minigame
 3,tim_1,$2y$10$SpuXRWQieIwW2zLEZ3KN2udFHTrBhc0G0kbGJfBIsGCrn/ED1/d6i,peserta
 4,tim_2,$2y$10$SpuXRWQieIwW2zLEZ3KN2udFHTrBhc0G0kbGJfBIsGCrn/ED1/d6i,peserta
-5,tim_3,$2y$10$SpuXRWQieIwW2zLEZ3KN2udFHTrBhc0G0kbGJfBIsGCrn/ED1/d6i,peserta
-6,tim_4,$2y$10$SpuXRWQieIwW2zLEZ3KN2udFHTrBhc0G0kbGJfBIsGCrn/ED1/d6i,peserta
-7,tim_5,$2y$10$SpuXRWQieIwW2zLEZ3KN2udFHTrBhc0G0kbGJfBIsGCrn/ED1/d6i,peserta
-8,tim_6,$2y$10$SpuXRWQieIwW2zLEZ3KN2udFHTrBhc0G0kbGJfBIsGCrn/ED1/d6i,peserta
-9,tim_7,$2y$10$SpuXRWQieIwW2zLEZ3KN2udFHTrBhc0G0kbGJfBIsGCrn/ED1/d6i,peserta
-10,tim_8,$2y$10$SpuXRWQieIwW2zLEZ3KN2udFHTrBhc0G0kbGJfBIsGCrn/ED1/d6i,peserta
-11,tim_9,$2y$10$SpuXRWQieIwW2zLEZ3KN2udFHTrBhc0G0kbGJfBIsGCrn/ED1/d6i,peserta
-12,tim_10,$2y$10$SpuXRWQieIwW2zLEZ3KN2udFHTrBhc0G0kbGJfBIsGCrn/ED1/d6i,peserta
-13,soal,$2y$10$EaIxU3ND7DwJN6QghxbosuAAEIRoMWzzDys73kN.Fx8T3hGB8FYZu,soal
-14,acara,$2y$10$eCAVQLI4RyCo1sgCmDbKb.LoL9NdTEb/KjHrJO8DoP6LlaEnGb7RG,acara
+5,soal,$2y$10$21nuabHKWapQs2C3AFPQJeS7izIpJIU5ZmgeS.3TdblXSWFOG2rwq,soal
+6,acara,$2y$10$hM52WAMHIveqoKqWpiDPYeKde4HZO28ipPJIpKSn6rdiozylMLdMS,acara
+7,SMH,$2y$12$RpW4kq6Z0z9OvBIvVlZUh.DPjRDHI3Vi.XIqF18hHkqEqZGIWq80e,peserta
+8,Pecinta Kimia,$2y$12$XTMnPuZr2L.Y0GEBJU45m.qMnQ6dhVRz5kALbromSzF7O7wT.jKey,peserta
+9,jabar,$2y$12$MlBJ1M4OEKo8kX3SGpPq0ecJBrI8zDAxCU8G6GCuGQdE5dnsyqd5e,peserta
+10,VLT,$2y$12$kEm62XfyGp3XmXpLooqBNeg6RQ4r2Xzi5ICbvFcdn2Ipd6DUH0pe2,peserta
+11,VAMOSS,$2y$12$TxONjqAsQVT9U0npRdVVMehJw8UWv/mcTpOvkMadZyPGaYb5.1G1G,peserta
