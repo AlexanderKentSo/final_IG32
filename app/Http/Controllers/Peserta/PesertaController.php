@@ -34,7 +34,7 @@ class PesertaController extends Controller
         $check = $tim->final()->first();
 
         if ($check != null) {
-            return redirect(route('peserta.index'))->with('failed', 'You has submitted the answer');
+            return redirect(route('peserta.index'))->with('failed', 'You have submitted the answer');
         }
 
         $kartu = $tim->cards()->first();
